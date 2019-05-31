@@ -1,0 +1,73 @@
+<html><pre>
+This is the README for the striatal network model model associated
+with the paper:
+
+Damodaran S, Evans RC, Blackwell KT (2014) Synchronized firing of
+fast-spiking interneurons is critical to maintain balanced firing
+between direct and indirect pathway neurons of the striatum. J
+Neurophysiol 111:836-48
+
+GENESIS is required which is freely available here:
+
+<a href="http://genesis-sim.org/">http://genesis-sim.org/</a>
+
+1. Top level file: SimNet.g
+This file calls MScell.g and the appropriate graphics functions
+
+2. SPnet.g
+This file calls the functions that connect both the SP-SP network and
+the extrinsic network of cortical and FS inputs
+
+3. net_conn.g
+This file contains the function that connects the SP-SP network
+
+4. InputFromFile.g
+This file has the functions that reads and connects the MATLAB
+generated input trains (cortical and FS) to the SP network NOTE: The
+files are generated in MATLAB with the ASSUMPTION that we are hooking
+up every single input in the network. So at a minimum we must have
+enough inputs for the synapses described in the nsynapses file.
+
+TO RUN THE SIMULATION:
+Run at -f Cntl.bat Now or SimNet in GENESIS.
+
+The default condition is the control condition. In order to change
+between the different conditions:
+1. NoFS: Replace the net_func.g file with the net_func.g file in the
+No_FS folder.
+2. NoMSN-MSN: Replace the net_func.g file with the net_func.g file in
+the No_FB folder.
+3. No Gap junctions: Replace the FScell folder with the FScell folder
+in the No_Gaps folder.
+
+To change the input correlation go to Net_parameters.g and change
+float percDup_SP and percDup_FS to the appropriate value.
+
+Sample INPUT TRAINS are available here: 
+<a href="http://senselab.med.yale.edu/modeldb/data/156260/INPUTDATA_FS.tar.gz">http://senselab.med.yale.edu/modeldb/data/156260/INPUTDATA_FS.tar.gz</a>
+<a href="http://senselab.med.yale.edu/modeldb/data/156260/INPUTDATA_SP.tar.gz">http://senselab.med.yale.edu/modeldb/data/156260/INPUTDATA_SP.tar.gz</a>
+These tar gz files can be uncompressed with unix/linux commands like
+$ tar zxf INPUTDATA_FS.tar.gz 
+$ tar zxf INPUTDATA_SP.tar.gz
+or by using your favorite extractor.  Note the input files extract to
+~207 MB.
+
+
+The sample input trains are for 0.3 cortical
+input correlation. Place in the top level folder.
+
+Generating INPUT trains
+
+1. Go to Matlab_files and run InputwithCorrelation2.m for both MSNs
+and FSIs.  Sample runs of the file in the MATLAB window:
+MSN:
+InputwithCorrelation2(1000,0.3,360(y),252(x),0.3,1,1,0.3,10,2,1,62)
+FSI:
+InputwithCorrelation2(49,0.3,127(y),89(x),0.3,93,65,0.3,10,2,1,62)
+x/y gives the percentage of unique inputs.
+
+In order to generate the trains an empty folder called INPUTDATA has
+to be in the same level as the .m files used to generate the
+trains. The file then has to be named INPUTDATA_SP or INPUTDATA_FS and
+placed in the top level folder of the genesis files.
+</pre></html>

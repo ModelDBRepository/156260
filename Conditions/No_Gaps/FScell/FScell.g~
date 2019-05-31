@@ -1,0 +1,130 @@
+//////////////////////////////////////////////////////////////////////////
+//
+// Johannes Hjorth, june 2005
+// hjorth@nada.kth.se
+// Sriraman Damodaran, september 2010
+// FScell.g - Creates a fast spiking neuron in the library
+//
+//////////////////////////////////////////////////////////////////////////
+//
+// make_FS_cell -- Creates the library template for a FS-neuron 
+//
+//////////////////////////////////////////////////////////////////////////
+
+
+str fsLibraryPath = "/library/fs"
+
+
+//////////////////////////////////////////////////////////////////////////
+
+function make_FS_cell (cellpath,pfile)
+
+
+  readcell {pfile} {cellpath}
+
+// Number of inputs to each compartmenttype
+
+  addfield {cellpath} somaDensityAMPA
+  addfield {cellpath} somaDensityNMDA
+  addfield {cellpath} somaDensityGABA
+
+  addfield {cellpath} primDensityAMPA
+  addfield {cellpath} primDensityNMDA
+  addfield {cellpath} primDensityGABA
+
+  addfield {cellpath} secDensityAMPA
+  addfield {cellpath} secDensityNMDA
+  addfield {cellpath} secDensityGABA
+
+  addfield {cellpath} tertDensityAMPA
+  addfield {cellpath} tertDensityNMDA
+  addfield {cellpath} tertDensityGABA
+
+// Weights of each input
+
+  addfield {cellpath} somaWeightAMPA
+  addfield {cellpath} somaWeightNMDA
+  addfield {cellpath} somaWeightGABA
+
+  addfield {cellpath} primWeightAMPA
+  addfield {cellpath} primWeightNMDA
+  addfield {cellpath} primWeightGABA
+
+  addfield {cellpath} secWeightAMPA
+  addfield {cellpath} secWeightNMDA
+  addfield {cellpath} secWeightGABA
+
+  addfield {cellpath} tertWeightAMPA
+  addfield {cellpath} tertWeightNMDA
+  addfield {cellpath} tertWeightGABA
+
+
+// Set default values for densities
+
+  setfield {cellpath} somaDensityAMPA 1
+  setfield {cellpath} somaDensityNMDA 1
+  setfield {cellpath} somaDensityGABA 3
+
+  setfield {cellpath} primDensityAMPA 1
+  setfield {cellpath} primDensityNMDA 1
+  setfield {cellpath} primDensityGABA 3
+
+  setfield {cellpath} secDensityAMPA  1
+  setfield {cellpath} secDensityNMDA  1
+  setfield {cellpath} secDensityGABA  3
+
+  setfield {cellpath} tertDensityAMPA 1
+  setfield {cellpath} tertDensityNMDA 1
+  setfield {cellpath} tertDensityGABA 0
+
+
+// Set default values for synapse weights
+
+  setfield {cellpath} somaWeightAMPA 1.0
+  setfield {cellpath} somaWeightNMDA 1.0
+  setfield {cellpath} somaWeightGABA 1.0
+
+  setfield {cellpath} primWeightAMPA 1.0
+  setfield {cellpath} primWeightNMDA 1.0
+  setfield {cellpath} primWeightGABA 1.0
+
+  setfield {cellpath} secWeightAMPA  1.0
+  setfield {cellpath} secWeightNMDA  1.0
+  setfield {cellpath} secWeightGABA  1.0
+
+  setfield {cellpath} tertWeightAMPA 1.0
+  setfield {cellpath} tertWeightNMDA 1.0
+  setfield {cellpath} tertWeightGABA 1.0
+
+end
+
+//////////////////////////////////////////////////////////////////////////
+
+
+//************************ Begin Primary Routine ******************************
+//*****************************************************************************
+
+	//************************ Begin function make_MS_cell *********************
+	//**************************************************************************
+	function make_MS_cell (cellpath,pfile)
+         str cellpath,pfile
+         echo {cellpath}
+ 	// function make_MS_cell is the first call from the primary file (MSsim.g). 
+	// Note that the first thing it does is to call make_protypes in proto.g. 
+	// These prototypes must be made before the call to add_channels. When the
+	// function add_channels is modified (as in msv4.0) to no longer add
+	// certain channels (such as K13, KRPI & KRPII), then the respective 
+	// make_prototypes calls (i.e. make_KRPII_channel should be deleted as 
+	// dead code. That is to say that only those channels shown in add_channels 
+	// (above) should have a make prototype in function make_prototypes in
+	// proto.g
+		make_prototypes					//	see proto.g
+//		readcell {pfile} {cellpath} -hsolve	//	see MScell.g
+              readcell {pfile} {cellpath}
+		set_position {cellpath}					// local call
+		add_channels {cellpath}					// local call
+	end	
+	//************************ End function make_MS_cell ***********************
+	//**************************************************************************			
+//************************ End Primary Routine ********************************
+//*****************************************************************************
